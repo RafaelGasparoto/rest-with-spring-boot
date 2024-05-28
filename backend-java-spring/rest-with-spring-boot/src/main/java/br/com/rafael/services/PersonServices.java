@@ -1,11 +1,12 @@
 package br.com.rafael.services;
 
 import java.util.List;
-import java.util.logging.Logger;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.stereotype.Service;
 
+import br.com.rafael.controller.PersonController;
 import br.com.rafael.exceptions.ResourceNotFoundException;
 import br.com.rafael.models.Person;
 import br.com.rafael.repository.PersonRepository;
@@ -13,15 +14,17 @@ import br.com.rafael.repository.PersonRepository;
 @Service
 public class PersonServices {
 
-	private Logger logger = Logger.getLogger(PersonServices.class.getName());
-
 	@Autowired
 	PersonRepository personRepository;
 
 	public Person findById(Long id) {
-		logger.info("Finding one person");
-
-		return this.personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Person not found"));
+		Person person = this.personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Person not found"));
+		try {
+			person.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return person;
 	}
 
 	public Person create(Person person) {
