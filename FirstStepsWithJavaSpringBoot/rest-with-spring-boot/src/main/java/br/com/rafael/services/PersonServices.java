@@ -12,24 +12,29 @@ import br.com.rafael.repository.PersonRepository;
 
 @Service
 public class PersonServices {
-	
+
 	private Logger logger = Logger.getLogger(PersonServices.class.getName());
-	
+
 	@Autowired
 	PersonRepository personRepository;
-	
+
 	public Person findById(Long id) {
 		logger.info("Finding one person");
-		
+
 		return this.personRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Person not found"));
 	}
-	
+
 	public Person create(Person person) {
 		return this.personRepository.save(person);
+	}
+
+	public void deletPerson(Long id) {
+		this.personRepository.deleteById(id);;
+		return;
 	}
 
 	public List<Person> finAll() {
 		return this.personRepository.findAll();
 	}
-	
+
 }
