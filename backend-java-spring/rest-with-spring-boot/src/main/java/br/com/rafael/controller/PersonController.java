@@ -15,15 +15,27 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.rafael.models.Person;
 import br.com.rafael.services.PersonServices;
 import br.com.rafael.util.MediaType;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/api/person/v1")
+@Tag(name = "People", description = "Enpoints for Managing People")
 public class PersonController {
 
 	@Autowired
 	private PersonServices service;
 
 	@GetMapping(produces = { MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML })
+	@Operation(summary = "Finds all people", description = "", tags = { "People" }, responses = {
+			@ApiResponse(description = "Success", responseCode = "200", content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Person.class)))),
+			@ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+			@ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+	})
 	public List<Person> findAll() throws Exception {
 		return service.finAll();
 	}
@@ -36,7 +48,7 @@ public class PersonController {
 					MediaType.APPLICATION_XML,
 					MediaType.APPLICATION_YML })
 	public Person create(@RequestBody Person person) throws Exception {
-		
+
 		return service.create(person);
 	}
 
