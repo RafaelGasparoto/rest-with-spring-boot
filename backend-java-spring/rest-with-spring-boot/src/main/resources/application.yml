@@ -1,3 +1,8 @@
+security:
+  jwt:
+    token:
+      secret-key: 53cr37
+      expire-length: 3600000
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -12,6 +17,8 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
     show-sql: false
 springdoc: 
-  pathsToMatch: /api/**/v1/**
+  pathsToMatch:
+  - /api/**/v1/**
+  - /auth/**
   swagger-ui:
     use-root-path: true
