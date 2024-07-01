@@ -34,6 +34,13 @@ public class Person extends RepresentationModel<Person> implements Serializable 
 	@Column
 	private String gender;
 	
+	@Column(nullable = false)
+	private Boolean enabled;
+
+	public Boolean getEnabled() {
+		return enabled;
+	}
+
 	public Person() {}
 
 	public Long getId() {
@@ -97,4 +104,19 @@ public class Person extends RepresentationModel<Person> implements Serializable 
 	
 	
 	
+
+    /**
+     * @return Boolean return the enabled
+     */
+    public Boolean isEnabled() {
+        return enabled;
+    }
+
+    /**
+     * @param enabled the enabled to set
+     */
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
 }
