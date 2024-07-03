@@ -3,6 +3,8 @@ package br.com.rafael.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import br.com.rafael.exceptions.ResourceNotFoundException;
@@ -20,8 +22,8 @@ public class BookServices {
         return book;
     }
 
-    public List<Book> findAll() {
-        return this.bookRepository.findAll();
+    public Page<Book> findAll(Pageable pageable) {
+        return this.bookRepository.findAll(pageable);
     }
     
 	public Book create(Book book) {

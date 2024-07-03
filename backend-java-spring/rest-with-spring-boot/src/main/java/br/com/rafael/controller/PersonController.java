@@ -82,4 +82,16 @@ public class PersonController {
 		service.deletPerson(id);
 		return ResponseEntity.noContent().build();
 	}
+
+	@GetMapping(value = "/findPersonByName/{firstName}")
+	public ResponseEntity<Page<Person>> findPersonByName(
+		@PathVariable(value = "firstName") String firstName,
+		@RequestParam(value = "page", defaultValue = "0") Integer page, 
+		@RequestParam(value = "size", defaultValue = "10") Integer size,
+		@RequestParam(value = "direction", defaultValue = "asc") String direction
+	) {
+		var sortDirection = direction.equalsIgnoreCase("desc") ? Direction.DESC : Direction.ASC;
+		Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "firstName"));
+		return ResponseEntity.ok(this.service.findByPersonName(firstName, pageable));
+	}
 }

@@ -58,4 +58,8 @@ public class PersonServices {
 		return this.personRepository.findAll(page);
 	}
 
+	public Page<Person> findByPersonName(String firtsName, Pageable pageable) {
+		return this.personRepository.findPersonByName(firtsName, pageable);
+	}
+
 }

@@ -3,6 +3,8 @@ security:
     token:
       secret-key: 53cr37
       expire-length: 3600000
+file:
+  upload-dir: /uploadDir
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -16,6 +18,12 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
     show-sql: false
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
 springdoc: 
   pathsToMatch:
   - /api/**/v1/**
